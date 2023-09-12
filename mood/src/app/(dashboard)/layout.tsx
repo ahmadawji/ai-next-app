@@ -11,7 +11,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             <UserButton />
           </div>
         </header>
-        <div className="p-2">{children}</div>
+        {/* 60px is the height of the header */}
+        <div className=" h-[calc(100vh-60px)]">{children}</div>
       </div>
     </div>
   )
