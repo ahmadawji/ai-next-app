@@ -7,8 +7,8 @@ const NewEntryCard = () => {
   const router = useRouter()
 
   const handleCreatingCard = async () => {
-    const data = await createNewEntry()
-    router.push(`/journal/${data.id}`)
+    const { data } = await createNewEntry()
+    router.push(`/journal/${data.userId}`)
   }
 
   return (
