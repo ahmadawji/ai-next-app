@@ -2,13 +2,14 @@
 
 import { useRouter } from "next/navigation"
 import { createNewEntry } from "../../utils/api"
+import { JournalEntry } from "@prisma/client"
 
 const NewEntryCard = () => {
   const router = useRouter()
 
   const handleCreatingCard = async () => {
-    const { data } = await createNewEntry()
-    router.push(`/journal/${data.userId}`)
+    const data = await createNewEntry()
+    router.push(`/journal/${data?.data?.id}`)
   }
 
   return (
