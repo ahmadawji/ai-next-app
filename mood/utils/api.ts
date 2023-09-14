@@ -18,3 +18,15 @@ export const createNewEntry = async (): Promise<
     return data
   }
 }
+
+export const updateEntry = async (id: string, content: string) => {
+  const res = await fetch(createURL(`/api/journal/${id}`), {
+    method: "PATCH",
+    body: JSON.stringify({ content }),
+  })
+
+  if (res.ok) {
+    const data = await res.json()
+    return data
+  }
+}
