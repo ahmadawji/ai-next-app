@@ -29,7 +29,7 @@ const Editor = ({ entry }: { entry: JournalEntry | null }) => {
 
       <textarea
         value={value}
-        className="w-full h-full p-8 text-xl outline-none"
+        className="w-full h-3/6 p-8 text-xl outline-none"
         onChange={(e) => {
           setValue(e.target.value)
         }}
