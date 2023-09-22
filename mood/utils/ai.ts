@@ -22,6 +22,11 @@ const parser = StructuredOutputParser.fromZodSchema(
       .describe(
         "a hexidecimal color code that represents the mood of the entry. Example #0101fe for blue representing happiness."
       ),
+    sentimentScore: z
+      .number()
+      .describe(
+        "sentiment of the text and rated on a scale from -10 to 10, where -10 is extremely negative, 0 is neutral, and 10 is extremely positive."
+      ),
   })
 )
 
@@ -40,8 +45,6 @@ const getPrompt = async (content: string) => {
     entry: content,
   })
 
-  console.log(input)
-
   return input
 }
 
@@ -49,5 +52,10 @@ export const analyze = async (entry: JournalEntry) => {
   const input = await getPrompt(entry.content)
   const model = new OpenAI({ temperature: 0, modelName: "gpt-3.5-turbo" })
   const result = await model.call(input)
-  console.log("🚀 ~ file: ai.ts:6 ~ analyze ~ result:", result)
+
+  try {
+    return parser.parse(result)
+  } catch (e) {
+    console.log(e)
+  }
 }

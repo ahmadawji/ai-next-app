@@ -3,7 +3,6 @@ import { getUserByClerkId } from "../../../../utils/auth"
 import { prisma } from "../../../../utils/db"
 import EntryCard from "@/components/EntryCard"
 import Link from "next/link"
-import { analyze } from "../../../../utils/ai"
 
 const getEntries = async () => {
   try {
@@ -11,9 +10,9 @@ const getEntries = async () => {
     const entries = await prisma.journalEntry.findMany({
       where: { userId: user.id },
       orderBy: { createdAt: "desc" },
+      include: { analysis: true },
     })
 
-    await analyze(entries[0])
     return entries
   } catch (e) {
     console.log(e)
