@@ -13,10 +13,7 @@ const getEntries = async () => {
       orderBy: { createdAt: "desc" },
     })
 
-    await analyze(`I'm going to give you journal entry to analyze and you have to give some information about this entry in a formatted JSON like so {"mood":'', "subject":'',"color":'',"negative":''}.
-    journal entry:
-    Today I finally found out a way to fix my payment issue, I was so excited getting back to work again.
-    `)
+    await analyze(entries[0])
     return entries
   } catch (e) {
     console.log(e)
