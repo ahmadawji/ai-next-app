@@ -22,6 +22,9 @@ const parser = StructuredOutputParser.fromZodSchema(
       .describe(
         "a hexidecimal color code that represents the mood of the entry. Example #0101fe for blue representing happiness."
       ),
+    emoji: z
+      .string()
+      .describe("An emoji that represents the mood of the entry"),
     sentimentScore: z
       .number()
       .describe(

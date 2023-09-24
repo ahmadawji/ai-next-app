@@ -68,6 +68,7 @@ model EntryAnalysis {
   negative       Boolean
   summary        String  @db.Text
   color          String  @default("#0101fe")
+  emoji          String?
   sentimentScore Float
 
   @@unique([entryId])

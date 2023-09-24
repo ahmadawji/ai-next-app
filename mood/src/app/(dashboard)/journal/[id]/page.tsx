@@ -39,7 +39,9 @@ const EntryPage = async ({ params }: { params: { id: string } }) => {
                 key={`${analysis.name}${index}`}
                 className="px-2 py-4 flex items-center justify-between border-b border-t border-black/10"
               >
-                <span className="text-lg font-semibold">{analysis.name}</span>
+                <span className={`mr-4 text-lg font-semibold`}>
+                  {analysis.name}
+                </span>
                 <span>{analysis.value?.toString()}</span>
               </li>
             ))}
