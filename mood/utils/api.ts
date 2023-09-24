@@ -1,6 +1,4 @@
 import { JournalEntry } from "@prisma/client"
-import { error } from "console"
-import { NextResponse } from "next/server"
 
 const createURL = (path: string) => {
   return window.location.origin + path
@@ -27,6 +25,6 @@ export const updateEntry = async (id: string, content: string) => {
 
   if (res.ok) {
     const data = await res.json()
-    return data
+    return data.data
   }
 }
