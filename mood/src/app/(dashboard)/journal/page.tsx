@@ -4,6 +4,7 @@ import { prisma } from "../../../../utils/db"
 import EntryCard from "@/components/EntryCard"
 import Link from "next/link"
 import { Prisma } from "@prisma/client"
+import Question from "@/components/Question"
 
 const entryWithAnalysis = Prisma.validator<Prisma.JournalEntryDefaultArgs>()({
   include: { analysis: true },
@@ -33,6 +34,9 @@ export default async function JournalPage() {
   return (
     <div className="bg-zinc-400/10 h-full p-5">
       <h2 className="text-3xl mb-8">Journal</h2>
+      <div className="my-8">
+        <Question />
+      </div>
       <div className="grid grid-cols-3 gap-4 p-1">
         <NewEntryCard />
         {entries?.map((entry: EntryWithAnalysis) => {

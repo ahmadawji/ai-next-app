@@ -4,6 +4,11 @@ import { StructuredOutputParser } from "langchain/output_parsers"
 import { z } from "zod"
 import { JournalEntry } from "@prisma/client"
 
+import { loadQARefineChain } from "langchain/chains"
+import { MemoryVectorStore } from "langchain/vectorstores/memory"
+import { OpenAIEmbeddings } from "langchain/embeddings/openai"
+import { Document } from "langchain/document"
+
 /* https://js.langchain.com/docs/modules/model_io/output_parsers/how_to/use_with_llm_chain */
 const parser = StructuredOutputParser.fromZodSchema(
   z.object({
@@ -61,4 +66,25 @@ export const analyze = async (entry: JournalEntry) => {
   } catch (e) {
     console.log(e)
   }
+}
+
+export const qa = async (question: string, entries: JournalEntry[]) => {
+  const docs = entries.map(
+    (entry: JournalEntry) =>
+      new Document({
+        pageContent: entry.content,
+        metadata: { source: entry.id, date: entry.createdAt },
+      })
+  )
+  const model = new OpenAI({ temperature: 0, modelName: "gpt-3.5-turbo" })
+  const chain = loadQARefineChain(model)
+  const embeddings = new OpenAIEmbeddings()
+  const store = await MemoryVectorStore.fromDocuments(docs, embeddings)
+  const relevantDocs = await store.similaritySearch(question)
+  const res = await chain.call({
+    input_documents: relevantDocs,
+    question,
+  })
+
+  return res.output_text
 }
