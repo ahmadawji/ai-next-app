@@ -5,6 +5,7 @@ import { ReactNode } from "react"
 const links = [
   { href: "/", label: "home" },
   { href: "/journal", label: "Journals" },
+  { href: "/history", label: "History" },
 ]
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
@@ -27,7 +28,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           </div>
         </header>
         {/* 60px is the height of the header */}
-        <div className="min-h-[calc(100vh-60px)] h-fit">{children}</div>
+        <div className="min-h-[calc(100vh-60px)]">{children}</div>
       </div>
     </div>
   )
