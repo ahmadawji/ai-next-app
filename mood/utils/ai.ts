@@ -9,6 +9,12 @@ import { MemoryVectorStore } from "langchain/vectorstores/memory"
 import { OpenAIEmbeddings } from "langchain/embeddings/openai"
 import { Document } from "langchain/document"
 
+interface PartialJournalEntry {
+  id: string
+  content: string
+  createdAt: Date
+}
+
 /* https://js.langchain.com/docs/modules/model_io/output_parsers/how_to/use_with_llm_chain */
 const parser = StructuredOutputParser.fromZodSchema(
   z.object({
@@ -68,9 +74,9 @@ export const analyze = async (entry: JournalEntry) => {
   }
 }
 
-export const qa = async (question: string, entries: JournalEntry[]) => {
+export const qa = async (question: string, entries: PartialJournalEntry[]) => {
   const docs = entries.map(
-    (entry: JournalEntry) =>
+    (entry: PartialJournalEntry) =>
       new Document({
         pageContent: entry.content,
         metadata: { source: entry.id, date: entry.createdAt },
