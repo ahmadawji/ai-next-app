@@ -13,6 +13,7 @@ const NewEntryCard = () => {
     const data = await createNewEntry()
     setIsLoading(false)
     router.push(`/journal/${data?.data?.id}`)
+    router.refresh()
   }
 
   return (

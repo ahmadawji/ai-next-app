@@ -1,9 +1,10 @@
 "use client"
-import { EntryAnalysis, JournalEntry, Prisma } from "@prisma/client"
+import { EntryAnalysis, Prisma } from "@prisma/client"
 import React, { useState } from "react"
 import { updateEntry } from "../../utils/api"
 import { useAutosave } from "react-autosave"
 import Analysis from "./Analysis"
+import { useRouter } from "next/navigation"
 
 const entryWithAnalysis = Prisma.validator<Prisma.JournalEntryDefaultArgs>()({
   include: { analysis: true },
@@ -17,6 +18,7 @@ const Editor = ({ entry }: { entry: EntryWithAnalysis }) => {
   const [analysis, setAnalysis] = useState<EntryAnalysis>(
     entry?.analysis as EntryAnalysis
   )
+  const router = useRouter()
 
   useAutosave({
     data: value,
@@ -28,6 +30,7 @@ const Editor = ({ entry }: { entry: EntryWithAnalysis }) => {
           _value as string
         )
         setAnalysis(updatedEntry?.analysis)
+        router.refresh()
         setIsLoading(false)
       } catch (e) {
         console.log(e)

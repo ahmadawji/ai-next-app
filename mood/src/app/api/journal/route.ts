@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import { getUserByClerkId } from "../../../../utils/auth"
 import { prisma } from "../../../../utils/db"
 import { JournalEntry } from "@prisma/client"
-import { revalidatePath } from "next/cache"
 import { analyze } from "../../../../utils/ai"
 
 export const POST = async (): Promise<NextResponse<{ data: JournalEntry }>> => {
@@ -19,10 +18,11 @@ export const POST = async (): Promise<NextResponse<{ data: JournalEntry }>> => {
       summary: analysis?.summary as string,
       subject: analysis?.subject as string,
       negative: analysis?.negative as boolean,
+      emoji: analysis?.emoji,
       color: analysis?.color as string,
       sentimentScore: 0,
     },
   })
-  revalidatePath("/journal")
+
   return NextResponse.json({ data: entry })
 }
