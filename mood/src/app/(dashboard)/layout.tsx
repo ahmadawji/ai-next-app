@@ -24,7 +24,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       <div className="basis-full h-full">
         <header className="h-[60px] border-b border-black/10 p-2">
           <div className="h-full w-full flex items-center justify-end px-6 ">
-            <UserButton />
+            <UserButton afterSignOutUrl="/" />
           </div>
         </header>
         {/* 60px is the height of the header */}
